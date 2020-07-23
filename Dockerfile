@@ -21,4 +21,4 @@ RUN apt-get update && apt-get install -y --force-yes libasound2-dev python3-pip 
 
 RUN pip3 install flask connexion swagger-ui-bundle pyalsaaudio pyspotify
 
-CMD [ "python3", "./main.py" ]
+CMD [ "python3", "./jukebike_iot_player.py" ]
