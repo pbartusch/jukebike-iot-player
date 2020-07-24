@@ -3,7 +3,7 @@
 
 # SET UP THE IOT (RASPBERRY PI)
 
-## Hardware: audio setup
+## Hardware: Audio setup
 
 ### Debug audio issues
 
@@ -21,7 +21,11 @@ sudo apt-get install alsa-utils
 aplay -L
 ```
 
-## Software: set up python environment
+## Hardware: Set up 4G connectivity
+
+TODO
+
+## Software: Set up python environment
 
 ```
 sudo pip3 install requests

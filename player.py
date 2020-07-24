@@ -5,7 +5,8 @@ import sys
 from secret_config import SPOTIFY_AUTH, JUKEBIKE_CONF
 
 logger = logging.getLogger()
-logging.getLogger('spotify').setLevel(logging.DEBUG)
+#logging.getLogger('spotify').setLevel(logging.DEBUG)
+logging.getLogger('spotify').setLevel(logging.INFO)
 
 class SpotifyPlayer:
 
@@ -17,9 +18,14 @@ class SpotifyPlayer:
             logger.error('In connection_state_listener :: login failed: error_type = '.format(error_type))
 
     def track_state_listener(self, session):
-        logger.debug("In track_state_listener")
-        self.is_playing = False
-        self._controller.notify_track_ended()
+        if self.end_of_track_event.is_set():
+            logger.debug("track_state_listener already called ... returning!")
+            return
+        else:
+            logger.debug("In track_state_listener (without conflicting call)")
+            self.end_of_track_event.set()
+            self.is_playing = False
+            self._controller.notify_track_ended(self.current_track_uri)
 
     def play_track(self, track_uri):
         next_track = spotify.Track(self.session, uri=track_uri).load()
@@ -27,7 +33,9 @@ class SpotifyPlayer:
         self.session.player.load(next_track)
         self.session.player.play()
         self.current_track = next_track
+        self.current_track_uri = track_uri
         self.is_playing = True
+        self.end_of_track_event.clear()
 
     def get_current_track(self):
         return self.current_track.name
@@ -37,6 +45,7 @@ class SpotifyPlayer:
 
         self._controller = controller
         self.current_track = None
+        self.current_track_uri = None
         self.is_playing = False
 
         # spotify player instance variables
