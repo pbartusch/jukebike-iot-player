@@ -43,14 +43,14 @@ SPOTIFY_AUTH = {
 
 JUKEBIKE_CONF = {
     'API_ROOT': '<URL to jukebike-cloud API>',
-    'PCM_ID': <PCM sound device ID>
+    'PCM_ID': '<PCM sound device ID>'
 }
 ```
 
 e.g., use this for hifiberry soundcard:
 
 ```
-    'PCM_ID': 'plughw:CARD=sndrpihifiberry,DEV=0'
+'PCM_ID': 'plughw:CARD=sndrpihifiberry,DEV=0'
 ```
 
 # DEPLOY TO IOT

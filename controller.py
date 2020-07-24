@@ -6,7 +6,7 @@ from secret_config import JUKEBIKE_CONF
 
 logger = logging.getLogger()
 
-CALL_WHATS_NEXT = 'whatsnext'
+CALL_WHATS_NEXT = '/whats-next'
 
 class JukeController:
 
@@ -17,7 +17,7 @@ class JukeController:
         API_ROOT = JUKEBIKE_CONF['API_ROOT']
 
         while True:
-            res_whats_next = requests.get('{}/{}'.format(API_ROOT, CALL_WHATS_NEXT))
+            res_whats_next = requests.get('{}{}'.format(API_ROOT, CALL_WHATS_NEXT))
             logger.debug('res_whats_next.status_code = {}'.format(res_whats_next.status_code))
 
             if (not self._player.is_playing):
