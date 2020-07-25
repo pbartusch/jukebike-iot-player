@@ -1,5 +1,6 @@
 #/bin/bash
 
+# TODO cut UMTS reconnect from jukebike startup script
 INTERNET_STATUS=false
 while [ "$INTERNET_STATUS" = false ]
 do
@@ -24,5 +25,7 @@ do
   sleep 1
 done;
 
-# TODO
+# TODO set audio level
+amixer set PCM 75%
+
 python3 /home/pi/jukebike-iot-player/jukebike_iot_player.py
