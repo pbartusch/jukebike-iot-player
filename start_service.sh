@@ -25,7 +25,4 @@ do
   sleep 1
 done;
 
-# TODO set audio level
-amixer set PCM 75%
-
 python3 /home/pi/jukebike-iot-player/jukebike_iot_player.py
