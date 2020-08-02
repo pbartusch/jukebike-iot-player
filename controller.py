@@ -49,6 +49,7 @@ class JukeController:
                     # set volume using amixer (from OS)
                     logger.info('load_iot_settings :: set volume to {}'.format(settings.volume))
                     subprocess.call(["amixer", "set PCM {}%".format(settings.volume)])
+                    self.last_settings = settings
                 else:
                     logger.debug('load_iot_settings :: nothing to do!')
             else:
