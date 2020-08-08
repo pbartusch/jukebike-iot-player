@@ -21,6 +21,17 @@ sudo apt-get install alsa-utils
 aplay -L
 ```
 
+Get / set volume level
+
+```
+# ex. for default audio jack
+amixer get PCM
+amixer set PCM 100%
+
+# ex. for hifiberry being card 1
+amixer -c 1 set Digital 80%
+```
+
 ## Hardware: Set up 4G connectivity
 
 Plug USB LTE Stick onto RPi and install tooling:
@@ -152,6 +163,7 @@ sudo reboot
 Hint: Debug service using:
 
 ```
+sudo systemctl <start|stop> jukebike.service
 journalctl -u jukebike.service
 ```
 

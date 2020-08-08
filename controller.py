@@ -11,7 +11,7 @@ logger = logging.getLogger()
 
 API_ROOT = JUKEBIKE_CONF['API_ROOT']
 CALL_WHATS_NEXT = '/whats-next'
-CALL_IOT_SETTINGS = '/iot-settings'
+CALL_IOT_SETTINGS = '/status'
 
 class JukeController:
 
@@ -40,7 +40,20 @@ class JukeController:
         logger.info(':: played_id = {}'.format(played_id))
         self.play_next(played_id)
 
+    ## TODO remove - this is only an IoT local sound check!!!
+    #__TMP_volume = 60
+
     def load_iot_settings(self):
+
+        ## TODO remove (see above)
+        #if self.__TMP_volume < 100:
+        #    self.__TMP_volume = self.__TMP_volume+10
+        #else:
+        #    self.__TMP_volume = 60
+        #__TMP_exec_call = "set Digital {}%".format(self.__TMP_volume)
+        #logger.info('load_iot_settings :: exec >>amixer {}'.format(__TMP_exec_call))
+        #subprocess.call(["amixer", "-c", "1", "set", "Digital", "{}%".format(self.__TMP_volume)])
+
         try:
             res_settings = requests.get('{}{}'.format(API_ROOT, CALL_IOT_SETTINGS))
             if (res_settings.status_code == 200):
@@ -48,7 +61,8 @@ class JukeController:
                 if ((self.last_settings is None) | (json.dumps(self.last_settings, sort_keys=True) != json.dumps(settings, sort_keys=True))):
                     # set volume using amixer (from OS)
                     logger.info('load_iot_settings :: set volume to {}'.format(settings.volume))
-                    subprocess.call(["amixer", "set PCM {}%".format(settings.volume)])
+                    # TODO make adressing the sound card configurable or - even better - inferr from JUKEBIKE_CONF
+                    subprocess.call(["amixer", "-c", "1", "set", "Digital", "{}%".format(settings.volume)])
                     self.last_settings = settings
                 else:
                     logger.debug('load_iot_settings :: nothing to do!')
